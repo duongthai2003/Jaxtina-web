@@ -287,7 +287,11 @@ function QuestionAndAnswerWriting() {
           <OverlayAnswerLine></OverlayAnswerLine>
         </OverlayAnswer>
         <AnswerBlock ref={clonedBlockRef}>
-          <CloneGroup axis="x" values={cloned} onReorder={setCloned}>
+          <CloneGroup
+            axis="x"
+            values={cloned}
+            onReorder={(newOrder: unknown[]) => setCloned(newOrder as Item[])}
+          >
             {cloned.map((item) => (
               <CloneItem
                 key={item.id}

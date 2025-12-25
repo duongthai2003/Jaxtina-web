@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { Skeleton } from "antd";
+// import { Skeleton } from "antd";
 import styled from "styled-components";
 import { convertPixelToRem } from "@/utils/func/convertRem";
-import { BaseTag } from "@/utils/baseTagHTML";
+// import { BaseTag } from "@/utils/baseTagHTML";
 import { device } from "@/utils/deviceBreakpoint";
 import { images } from "@/assets";
 import { PATHS } from "@/routers/path";
@@ -35,29 +35,29 @@ const Programme = () => {
   );
 };
 export default Programme;
-const ProgrammeSkeleton = () => {
-  return (
-    <Wrapper>
-      <CourseBanner>
-        <BaseTag.skeletonNode
-          active
-          style={{ borderRadius: convertPixelToRem(16) }}
-        />
-      </CourseBanner>
+// const ProgrammeSkeleton = () => {
+//   return (
+//     <Wrapper>
+//       <CourseBanner>
+//         <BaseTag.skeletonNode
+//           active
+//           style={{ borderRadius: convertPixelToRem(16) }}
+//         />
+//       </CourseBanner>
 
-      <LessonList>
-        {new Array(5).fill(1).map((_, index) => {
-          return (
-            <LessonItem key={index}>
-              <LessonItemSkeletonLine active />
-              <Skeleton.Avatar active shape="square" size={"small"} />
-            </LessonItem>
-          );
-        })}
-      </LessonList>
-    </Wrapper>
-  );
-};
+//       <LessonList>
+//         {new Array(5).fill(1).map((_, index) => {
+//           return (
+//             <LessonItem key={index}>
+//               <LessonItemSkeletonLine active />
+//               <Skeleton.Avatar active shape="square" size={"small"} />
+//             </LessonItem>
+//           );
+//         })}
+//       </LessonList>
+//     </Wrapper>
+//   );
+// };
 
 const Wrapper = styled.div`
   display: flex;
@@ -100,12 +100,12 @@ const LessonItemName = styled.p`
   font-weight: bold;
   flex: 1;
 `;
-const LessonItemSkeletonLine = styled(BaseTag.skeletonLine)`
-  &&.ant-skeleton,
-  && .ant-skeleton-image {
-    width: 80%;
-    @media (max-width: ${convertPixelToRem(device.tablet)}) {
-      width: 100%;
-    }
-  }
-`;
+// const LessonItemSkeletonLine = styled(BaseTag.skeletonLine)`
+//   &&.ant-skeleton,
+//   && .ant-skeleton-image {
+//     width: 80%;
+//     @media (max-width: ${convertPixelToRem(device.tablet)}) {
+//       width: 100%;
+//     }
+//   }
+// `;

@@ -1,8 +1,8 @@
-import { Progress, Skeleton } from "antd";
+import { Progress } from "antd";
 import styled from "styled-components";
 import { BaseTag } from "@/utils/baseTagHTML";
 import { convertPixelToRem } from "@/utils/func/convertRem";
-import { device } from "@/utils/deviceBreakpoint";
+// import { device } from "@/utils/deviceBreakpoint";
 
 const Statistical = () => {
   return (
@@ -40,30 +40,30 @@ const Statistical = () => {
   );
 };
 export default Statistical;
-const StatisticalSkeleton = () => {
-  return (
-    <Wrapper>
-      {new Array(10).fill(1).map((_, index) => {
-        return (
-          <LessonItem key={index}>
-            <LessonTitle>
-              <LessonTitleSkeletonLine active />{" "}
-            </LessonTitle>
-            <ProgressBlock>
-              <ProgressTitle>
-                <LessonItemSkeletonLine active />
-                <LessonItemSkeletonLine active />
-              </ProgressTitle>
-              <BaseTag.div>
-                <Skeleton.Avatar active shape="circle" size={"large"} />
-              </BaseTag.div>
-            </ProgressBlock>
-          </LessonItem>
-        );
-      })}
-    </Wrapper>
-  );
-};
+// const StatisticalSkeleton = () => {
+//   return (
+//     <Wrapper>
+//       {new Array(10).fill(1).map((_, index) => {
+//         return (
+//           <LessonItem key={index}>
+//             <LessonTitle>
+//               <LessonTitleSkeletonLine active />{" "}
+//             </LessonTitle>
+//             <ProgressBlock>
+//               <ProgressTitle>
+//                 <LessonItemSkeletonLine active />
+//                 <LessonItemSkeletonLine active />
+//               </ProgressTitle>
+//               <BaseTag.div>
+//                 <Skeleton.Avatar active shape="circle" size={"large"} />
+//               </BaseTag.div>
+//             </ProgressBlock>
+//           </LessonItem>
+//         );
+//       })}
+//     </Wrapper>
+//   );
+// };
 const Wrapper = styled.div`
   gap: ${convertPixelToRem(16)};
   display: flex;
@@ -103,18 +103,18 @@ const ProgressAnt = styled(Progress)`
     stroke: ${(p) => p.theme.auth.$progress};
   }
 `;
-const LessonTitle = styled.div`
-  flex: 1;
-`;
+// const LessonTitle = styled.div`
+//   flex: 1;
+// `;
 const ProgressBlock = styled.div`
   display: flex;
   gap: ${convertPixelToRem(10)};
   align-items: center;
 `;
-const ProgressTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const ProgressTitle = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 const Done = styled.p`
   font-size: ${convertPixelToRem(12)};
   font-weight: bold;
@@ -124,16 +124,16 @@ const Correct = styled.p`
   font-weight: 500;
   color: ${(p) => p.theme.$text_tertiary};
 `;
-const LessonItemSkeletonLine = styled(Skeleton.Node)`
-  && .ant-skeleton-image {
-    height: ${convertPixelToRem(14)};
-  }
-`;
-const LessonTitleSkeletonLine = styled(BaseTag.skeletonLine)`
-  && .ant-skeleton-image {
-    width: 80%;
-    @media (max-width: ${convertPixelToRem(device.tablet)}) {
-      width: 100%;
-    }
-  }
-`;
+// const LessonItemSkeletonLine = styled(Skeleton.Node)`
+//   && .ant-skeleton-image {
+//     height: ${convertPixelToRem(14)};
+//   }
+// `;
+// const LessonTitleSkeletonLine = styled(BaseTag.skeletonLine)`
+//   && .ant-skeleton-image {
+//     width: 80%;
+//     @media (max-width: ${convertPixelToRem(device.tablet)}) {
+//       width: 100%;
+//     }
+//   }
+// `;

@@ -19,7 +19,7 @@ const Report = ({ isOpen, setIsOpen }: ExerciseModalProps) => {
   };
 
   const onFinish = async (values: any) => {
-    console.log("call api");
+    console.log("call api", values);
   };
   return (
     <BaseTag.div>

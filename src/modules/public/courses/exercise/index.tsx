@@ -15,17 +15,15 @@ import ExerciseListening from "@/components/courses/exercise/ExerciseListening";
 
 const Exercise = () => {
   const navigate = useNavigate();
-  const [errorSoundAudio, state, errorSoundControls] = useAudio({
+  const [errorSoundAudio, , errorSoundControls] = useAudio({
     src: icons.errorSound,
     autoPlay: false,
   });
-  const [correctSoundAudio, correctSoundState, correctSoundControls] = useAudio(
-    {
-      src: icons.correctSound,
-      autoPlay: false,
-    }
-  );
-  const [finalSoundAudio, finalSoundState, finalSoundControls] = useAudio({
+  const [correctSoundAudio, , correctSoundControls] = useAudio({
+    src: icons.correctSound,
+    autoPlay: false,
+  });
+  const [finalSoundAudio, , finalSoundControls] = useAudio({
     src: icons.finalSound,
     autoPlay: false,
   });

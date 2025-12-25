@@ -2,25 +2,21 @@ import { BaseTag } from "@/utils/baseTagHTML";
 import { EXI } from "./style";
 import { icons, images } from "@/assets";
 import { useAudio } from "react-use";
-interface lessonItem {
-  id: number;
-  icons: string;
-  answer: string;
-  transcription: string;
-  sound: string;
-  status: string;
-  wordType: string;
-}
-type ExerciseLearnVocabProps = {
-  data: lessonItem;
-  setSelectedAnswer: (answer: string) => void;
-  selectedAnswer: string | null;
-};
-const ExerciseLearnVocab = ({
-  data,
-  setSelectedAnswer,
-  selectedAnswer,
-}: ExerciseLearnVocabProps) => {
+// interface lessonItem {
+//   id: number;
+//   icons: string;
+//   answer: string;
+//   transcription: string;
+//   sound: string;
+//   status: string;
+//   wordType: string;
+// }
+// type ExerciseLearnVocabProps = {
+//   data: lessonItem;
+//   setSelectedAnswer: (answer: string) => void;
+//   selectedAnswer: string | null;
+// };
+const ExerciseLearnVocab = () => {
   const [audio, state, controls, audioRef] = useAudio({
     src: icons.audio,
     autoPlay: false,

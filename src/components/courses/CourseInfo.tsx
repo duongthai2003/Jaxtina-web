@@ -1,6 +1,6 @@
 import { Gift } from "lucide-react";
 import styled from "styled-components";
-import { Skeleton } from "antd";
+// import { Skeleton } from "antd";
 import { convertPixelToRem } from "@/utils/func/convertRem";
 import { BaseTag } from "@/utils/baseTagHTML";
 
@@ -26,23 +26,23 @@ const CourseInfo = () => {
   );
 };
 export default CourseInfo;
-const CourseInfoSkeleton = () => {
-  return (
-    <Wrapper>
-      {new Array(3).fill(1).map((_, index) => {
-        return (
-          <InfoItem key={index}>
-            <InfoItemHead>
-              <Skeleton.Avatar active shape="square" size={"small"} />
-              <BaseTag.skeletonLine active />
-            </InfoItemHead>
-            <BaseTag.skeletonList active paragraph={{ rows: 3 }} />
-          </InfoItem>
-        );
-      })}
-    </Wrapper>
-  );
-};
+// const CourseInfoSkeleton = () => {
+//   return (
+//     <Wrapper>
+//       {new Array(3).fill(1).map((_, index) => {
+//         return (
+//           <InfoItem key={index}>
+//             <InfoItemHead>
+//               <Skeleton.Avatar active shape="square" size={"small"} />
+//               <BaseTag.skeletonLine active />
+//             </InfoItemHead>
+//             <BaseTag.skeletonList active paragraph={{ rows: 3 }} />
+//           </InfoItem>
+//         );
+//       })}
+//     </Wrapper>
+//   );
+// };
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

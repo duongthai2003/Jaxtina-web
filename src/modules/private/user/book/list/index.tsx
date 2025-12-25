@@ -10,7 +10,7 @@ import { icons } from "@/assets";
 import { BookStyles } from "./style";
 
 const ITEMS_PER_PAGE = 10;
-const PREVIEW_LIMIT = ITEMS_PER_PAGE;
+//const PREVIEW_LIMIT = ITEMS_PER_PAGE;
 
 const getPaginationMeta = (
   pagination?: BookPaginationMeta | BookPaginationMeta[]

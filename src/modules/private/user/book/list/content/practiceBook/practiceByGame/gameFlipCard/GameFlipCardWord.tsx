@@ -42,7 +42,7 @@ const GameFlipCardWord = () => {
     clearMismatch,
   } = gameFlipCardStore();
   const [showFloatPoint, setShowFloatPoint] = useState(false);
-  const [FloatPointPosition, setFloatPointPosition] = useState({ x: 0, y: 0 });
+  const [, setFloatPointPosition] = useState({ x: 0, y: 0 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   // const {id} = useParams()
