@@ -1,6 +1,15 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Form, Input, InputNumber, Select, Space, message } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  message,
+} from "antd";
 import styled from "styled-components";
 import { useCreateTopic } from "@/hooks/useTopic";
 import { useAllBook } from "@/hooks/useBookQuery";
@@ -19,7 +28,7 @@ const TopicCreate: React.FC = () => {
 
   const bookOptions = useMemo(
     () =>
-      (bookData?.data ?? []).map((b) => ({
+      (bookData?.data ?? []).map((b: any) => ({
         label: b.name,
         value: b._id,
       })),
@@ -31,8 +40,7 @@ const TopicCreate: React.FC = () => {
       await createTopic({ data: values });
       message.success(COMMON_MESSAGE.TOPIC_CREATE_SUCCESS);
       navigate(PATHS.private.admin.topic.list());
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   return (
@@ -85,7 +93,9 @@ const TopicCreate: React.FC = () => {
               loading={!bookData}
               showSearch
               filterOption={(input, option) =>
-                (option?.label as string)?.toLowerCase().includes(input.toLowerCase())
+                (option?.label as string)
+                  ?.toLowerCase()
+                  .includes(input.toLowerCase())
               }
             />
           </Form.Item>
@@ -106,15 +116,13 @@ const TopicCreate: React.FC = () => {
           <Form.Item
             label="Ảnh"
             name="image"
-            rules={[{ required: true, message: "Vui lòng chọn hoặc upload ảnh" }]}
+            rules={[
+              { required: true, message: "Vui lòng chọn hoặc upload ảnh" },
+            ]}
             valuePropName="value"
             trigger="onChangeInput"
           >
-            <InputUpload
-              mode="image"
-              accept="image/*"
-              maxSizeMB={5}
-            />
+            <InputUpload mode="image" accept="image/*" maxSizeMB={5} />
           </Form.Item>
 
           <Form.Item
@@ -134,7 +142,9 @@ const TopicCreate: React.FC = () => {
               >
                 Lưu
               </Button>
-              <Button onClick={() => navigate(PATHS.private.admin.topic.list())}>
+              <Button
+                onClick={() => navigate(PATHS.private.admin.topic.list())}
+              >
                 Hủy
               </Button>
             </Space>
@@ -161,4 +171,3 @@ const PageWrapper = styled.div`
 `;
 
 export default TopicCreate;
-

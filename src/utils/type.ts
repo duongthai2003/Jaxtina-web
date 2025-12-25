@@ -1,4 +1,4 @@
-type ResponseData = {
+export type ResponseData = {
   statusCode: number;
   data: {
     success: boolean;

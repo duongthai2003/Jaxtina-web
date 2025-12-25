@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { icons } from "@/assets";
 import { PATHS } from "@/routers/path";
-import { ROLE_ACCOUNT } from "./constants";
 
 export interface MenuItemType {
   label: string;

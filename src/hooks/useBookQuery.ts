@@ -1,13 +1,8 @@
-import {
-  useMutation,
-  useQuery,
-  UseQueryResult,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import API from "@/utils/apiRoutes";
 import { queryKeys } from "@/utils/query";
 import {
   Book,
-  BookPaginationResponse,
   BookResponse,
   CreateBookParams,
   CreateBookPayload,
@@ -15,7 +10,8 @@ import {
   DeleteBookParams,
   UpdateBookParams,
   UpdateOrDeleteBookPayload,
-} from "@/modules/private/user/book/list/type";
+  BookPaginationResponse,
+} from "@/modules/private/user/book/type";
 import { axiosClientAdmin } from "@/services/baseAdmin";
 import { get } from "lodash";
 import { message } from "antd";
@@ -32,9 +28,11 @@ const blobToDataUrl = (blob: Blob): Promise<string> => {
   });
 };
 
-export const getBookImageWithToken = async (imagePath: string): Promise<string> => {
+export const getBookImageWithToken = async (
+  imagePath: string
+): Promise<string> => {
   const blob = (await axiosClientAdmin.get(imagePath, {
-    responseType: "blob"
+    responseType: "blob",
   })) as Blob;
   return blobToDataUrl(blob);
 };
@@ -43,14 +41,14 @@ const withBookImages = async <T extends BookResponse | BookPaginationResponse>(
   bookResponse: T
 ): Promise<T> => {
   const booksWithImages = await Promise.all(
-    bookResponse.data.map(async (book) => {
+    bookResponse.data.map(async (book: any) => {
       if (!book.url || !book.background_url || !book.road_url) {
         return book;
       }
       try {
         const imageSrc = await getBookImageWithToken(book.url);
-        const backgroundSrc = await getBookImageWithToken(book.background_url)
-        const roadSrc = await getBookImageWithToken(book.road_url)
+        const backgroundSrc = await getBookImageWithToken(book.background_url);
+        const roadSrc = await getBookImageWithToken(book.road_url);
         return { ...book, imageSrc, backgroundSrc, roadSrc } as Book;
       } catch {
         return book;
@@ -73,15 +71,14 @@ const withSingleBookImage = async (
 };
 
 const fetcherGetAll = async (): Promise<BookResponse> => {
-  const response = await axiosClientAdmin.get<BookResponse>(BOOK_API)
-  const bookResponse = get(response, "data" , {data: []}) as BookResponse
-  return withBookImages(bookResponse)
-}
-export const useAllBook = (
-): UseQueryResult<BookResponse, Error> => {
+  const response = await axiosClientAdmin.get<BookResponse>(BOOK_API);
+  const bookResponse = get(response, "data", { data: [] }) as BookResponse;
+  return withBookImages(bookResponse);
+};
+export const useAllBook = (): UseQueryResult<BookResponse, Error> => {
   return useQuery<BookResponse>({
     queryKey: [queryKeys.private.manager.book, "all"],
-    queryFn: () => fetcherGetAll()
+    queryFn: () => fetcherGetAll(),
   });
 };
 
@@ -93,102 +90,102 @@ const fetcherGetPaging = async (
   sort?: "asc" | "desc"
 ): Promise<BookPaginationResponse> => {
   const response = await axiosClientAdmin.get(`${BOOK_API}/pagination`, {
-      params: {
-        page,
-        limit,
-        search,
-        bookId: bookId || undefined,
-        sort: sort || "asc"
-      }
-    });
-    const payload = get(response, "data", {});
-    const books = get(payload, "data") ?? get(payload, "books") ?? [];
-    const pagination = get(payload, "pagination", {
-      total: get(payload, "total", Array.isArray(books) ? books.length : 0),
-      page: get(payload, "page", page),
-      limit: get(payload, "limit", limit),
-      totalPages: get(
-        payload,
-        "totalPages",
-        Math.ceil((get(payload, "total", books.length) || 0) / limit)
-      )
-    });
-  
-    return withBookImages({
-      data: books,
-      pagination
-    });
-}
+    params: {
+      page,
+      limit,
+      search,
+      bookId: bookId || undefined,
+      sort: sort || "asc",
+    },
+  });
+  const payload = get(response, "data", {});
+  const books = get(payload, "data") ?? get(payload, "books") ?? [];
+  const pagination = get(payload, "pagination", {
+    total: get(payload, "total", Array.isArray(books) ? books.length : 0),
+    page: get(payload, "page", page),
+    limit: get(payload, "limit", limit),
+    totalPages: get(
+      payload,
+      "totalPages",
+      Math.ceil((get(payload, "total", books.length) || 0) / limit)
+    ),
+  });
+
+  return withBookImages({
+    data: books,
+    pagination,
+  });
+};
 
 export const useAllBookPagination = (
   page = 1,
   limit = 10,
   search = "",
-  id?: string,
+  id?: string
 ): UseQueryResult<BookPaginationResponse, Error> => {
   return useQuery({
-      queryKey: [
-        queryKeys.private.manager.book_pagination,
-        page,
-        limit,
-        search,
-        id
-      ],
-      queryFn: () => fetcherGetPaging(page, limit, search, id)
-    });
-  };
+    queryKey: [
+      queryKeys.private.manager.book_pagination,
+      page,
+      limit,
+      search,
+      id,
+    ],
+    queryFn: () => fetcherGetPaging(page, limit, search, id),
+  });
+};
 
-  const fetcherGetById = async (
-    id: string
-  ): Promise<CreateOrUpdateBookResponse> => {
-    const response = await axiosClientAdmin.get<CreateOrUpdateBookResponse>(
-      `${BOOK_API}/${id}`
+const fetcherGetById = async (
+  id: string
+): Promise<CreateOrUpdateBookResponse> => {
+  const response = await axiosClientAdmin.get<CreateOrUpdateBookResponse>(
+    `${BOOK_API}/${id}`
+  );
+  const bookResponse = get(response, "data", {
+    data: {} as Book,
+  }) as CreateOrUpdateBookResponse;
+  return withSingleBookImage(bookResponse);
+};
+
+export const useGetBookById = (
+  id: string
+): UseQueryResult<CreateOrUpdateBookResponse, Error> => {
+  return useQuery({
+    queryKey: [queryKeys.private.manager.book_by_id, id],
+    queryFn: async () => {
+      const res = await fetcherGetById(id);
+      const book = (res as any)?.data ?? res;
+      return { data: book } as CreateOrUpdateBookResponse;
+    },
+    enabled: !!id,
+  });
+};
+
+export const handleBookError = (error: any) => {
+  const code = error?.response?.data?.errorCode;
+  if (code === BookErrorCode.BOOK_CODE_EXISTS) {
+    message.error(BookErrorDescription.BOOK_CODE_EXISTS);
+    return;
+  } else if (code === BookErrorCode.BOOK_NOT_FOUND) {
+    message.error(BookErrorDescription.BOOK_NOT_FOUND);
+    return;
+  } else if (code === BookErrorCode.BOOK_ID_NOT_VALID) {
+    message.error(BookErrorDescription.BOOK_ID_NOT_VALID);
+  } else if (code === BookErrorCode.BOOK_TYPE_EXISTS) {
+    message.error(BookErrorDescription.BOOK_TYPE_EXISTS);
+  } else
+    message.error(
+      error?.response?.data?.errorDescription ||
+        "Có lỗi xảy ra, vui lòng thử lại"
     );
-    const bookResponse = get(response, "data", {
-      data: {} as Book
-    }) as CreateOrUpdateBookResponse;
-    return withSingleBookImage(bookResponse);
-  };
-  
-  export const useGetBookById = (
-    id: string
-  ): UseQueryResult<CreateOrUpdateBookResponse, Error> => {
-    return useQuery({
-      queryKey: [queryKeys.private.manager.book_by_id, id],
-      queryFn: async () => {
-        const res = await fetcherGetById(id);
-        const book = (res as any)?.data ?? res;
-        return { data: book } as CreateOrUpdateBookResponse;
-      },
-      enabled: !!id
-    });
-  };
-
-  export const handleBookError = (error: any) => {
-    const code = error?.response?.data?.errorCode;
-    if (code === BookErrorCode.BOOK_CODE_EXISTS) {
-      message.error(BookErrorDescription.BOOK_CODE_EXISTS);
-      return;
-    }
-    else if (code === BookErrorCode.BOOK_NOT_FOUND) {
-      message.error(BookErrorDescription.BOOK_NOT_FOUND);
-      return;
-    }
-    else if (code  === BookErrorCode.BOOK_ID_NOT_VALID ) {
-      message.error(BookErrorDescription.BOOK_ID_NOT_VALID)
-    }
-    else if( code === BookErrorCode.BOOK_TYPE_EXISTS) {
-      message.error(BookErrorDescription.BOOK_TYPE_EXISTS)
-    } else
-    message.error(error?.response?.data?.errorDescription || "Có lỗi xảy ra, vui lòng thử lại");
-  };
+};
 
 export const useCreateBook = () => {
   async function requestFn(params: CreateBookPayload) {
-    return axiosClientAdmin.post<
-      CreateBookPayload,
-      CreateOrUpdateBookResponse
-    >(BOOK_API, params);
+    return axiosClientAdmin.post<CreateBookPayload, CreateOrUpdateBookResponse>(
+      BOOK_API,
+      params
+    );
   }
 
   const mutation = useMutation<
@@ -198,7 +195,7 @@ export const useCreateBook = () => {
   >({
     mutationKey: [queryKeys.private.manager.book, "create"],
     mutationFn: requestFn,
-    onError: (error) => handleBookError(error)
+    onError: (error) => handleBookError(error),
   });
 
   const { mutateAsync, status } = mutation;
@@ -206,7 +203,7 @@ export const useCreateBook = () => {
   const createBook = async ({ data }: CreateBookParams) => {
     const result = await mutateAsync(data);
     const bookResponse = get(result, "data", {
-      data: {} as Book
+      data: {} as Book,
     }) as CreateOrUpdateBookResponse;
     return withSingleBookImage(bookResponse);
   };
@@ -230,7 +227,7 @@ export const useUpdateBook = () => {
   >({
     mutationKey: [queryKeys.private.manager.book, "update"],
     mutationFn: requestFn,
-    onError: (error) => handleBookError(error)
+    onError: (error) => handleBookError(error),
   });
 
   const { mutateAsync, status } = mutation;
@@ -238,7 +235,7 @@ export const useUpdateBook = () => {
   const updateBook = async ({ id, data }: UpdateBookParams) => {
     const result = await mutateAsync({ id, data });
     const bookResponse = get(result, "data", {
-      data: {} as Book
+      data: {} as Book,
     }) as CreateOrUpdateBookResponse;
     return withSingleBookImage(bookResponse);
   };
@@ -254,7 +251,7 @@ export const useDeleteBook = () => {
 
   const mutation = useMutation<unknown, Error, DeleteBookParams>({
     mutationKey: [queryKeys.private.manager.book, "delete"],
-    mutationFn: requestFn
+    mutationFn: requestFn,
   });
 
   const { mutateAsync, status } = mutation;

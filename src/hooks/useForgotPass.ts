@@ -2,6 +2,7 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { axiosClient } from "@/services/base";
 import { queryKeys } from "@/utils/query";
 import API from "@/utils/apiRoutes";
+import { ResponseData } from "@/utils/type";
 
 interface RequestSendOtp {
   email?: string;

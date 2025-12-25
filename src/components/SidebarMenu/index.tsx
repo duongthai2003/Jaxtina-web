@@ -17,7 +17,6 @@ import { PATHS } from "@/routers/path";
 import { MenuInfo } from "rc-menu/lib/interface";
 import { MenuItemType } from "@/utils/menuList";
 import { device } from "@/utils/deviceBreakpoint";
-import { Skeleton } from "antd";
 type RoleAccountType = (typeof ROLE_ACCOUNT)[keyof typeof ROLE_ACCOUNT];
 
 const filterMenuByRole = (
@@ -45,7 +44,6 @@ const filterMenuByRole = (
 };
 
 const SidebarMenu = ({ menuList }: { menuList: MenuItemType[] }) => {
-  
   const getMenuCurrent = getCookieStorage(
     LOCAL_STORAGE_DATA.MENU_CURRENT
   ) as string;
@@ -58,7 +56,7 @@ const SidebarMenu = ({ menuList }: { menuList: MenuItemType[] }) => {
   const [selectedKeys, setSelectedKeys] = useState(defaultSelectedKeys);
   const [collapsed, setCollapsed] = useState(collapsedStatusInit);
   const isRolesLoaded = !isLoadingRole && Array.isArray(roles);
-  
+
   const normalizedRoles = useMemo(
     () => (Array.isArray(roles) ? roles : []),
     [roles]
@@ -169,7 +167,10 @@ const SidebarMenu = ({ menuList }: { menuList: MenuItemType[] }) => {
           ) : (
             <SB.CustomSkeleton
               active
-              paragraph={{ rows: 6, width: ["80%", "70%", "90%", "60%", "75%", "85%"] }}
+              paragraph={{
+                rows: 6,
+                width: ["80%", "70%", "90%", "60%", "75%", "85%"],
+              }}
               title={false}
             />
           )}

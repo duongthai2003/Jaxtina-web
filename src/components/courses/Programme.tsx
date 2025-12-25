@@ -17,7 +17,7 @@ const Programme = () => {
       </CourseBanner>
 
       <LessonList>
-        {new Array(10).fill(1).map((item, index) => {
+        {new Array(10).fill(1).map((_, index) => {
           return (
             <LessonItem
               key={index}
@@ -46,7 +46,7 @@ const ProgrammeSkeleton = () => {
       </CourseBanner>
 
       <LessonList>
-        {new Array(5).fill(1).map((item, index) => {
+        {new Array(5).fill(1).map((_, index) => {
           return (
             <LessonItem key={index}>
               <LessonItemSkeletonLine active />

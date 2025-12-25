@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { CircleCheck } from "lucide-react";
 import { get } from "lodash";
 import { POP } from "./style";
 import { useDetailUser } from "@/hooks/useDetailUser";
@@ -63,11 +62,12 @@ const PopupVerifyEmail: React.FC = () => {
           <POP.TextContent>
             <BaseTag.p>Xác thực Email giúp bạn:</BaseTag.p>
             <POP.TextContentItem>
-              <CircleCheck size={20} color="green" />
+              <img src={images.checkgreen} alt="" />
               <BaseTag.p>Tránh mất tài khoản</BaseTag.p>
             </POP.TextContentItem>
             <POP.TextContentItem>
-              <CircleCheck size={20} color="green" />
+              <img src={images.checkgreen} alt="" />
+
               <BaseTag.p>
                 Sử dụng được đầy đủ các chức năng của ứng dụng
               </BaseTag.p>

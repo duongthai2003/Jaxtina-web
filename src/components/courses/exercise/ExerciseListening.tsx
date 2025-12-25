@@ -52,7 +52,7 @@ const ExerciseListening = ({
   const blankRef = useRef(null);
   const itemRefs = useRef<ItemRefs>({});
   const [audio, state, controls, audioRef] = useAudio({
-    src: icons.audio,
+    src: "https://app.jaxtina.com/course-assets/4SKILLS_PRE_S_L1/sounds/normal/Normal_Speaking.mp3",
     autoPlay: false,
   });
 

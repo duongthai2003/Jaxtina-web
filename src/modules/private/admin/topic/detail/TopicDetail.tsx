@@ -1,8 +1,21 @@
 import React, { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, Form, Input, InputNumber, Select, Space, message } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  message,
+} from "antd";
 import styled from "styled-components";
-import { useCreateTopic, useGetTopicById, useUpdateTopic } from "@/hooks/useTopic";
+import {
+  useCreateTopic,
+  useGetTopicById,
+  useUpdateTopic,
+} from "@/hooks/useTopic";
 import { useAllBook } from "@/hooks/useBookQuery";
 import { CreateTopicPayload } from "@/hooks/useTopic";
 import { CommonBreadcrumb } from "@/components/Breadcrumb";
@@ -17,17 +30,19 @@ const TopicDetail: React.FC = () => {
   const isEdit = !!id;
   const { createTopic, status: createStatus } = useCreateTopic();
   const { updateTopic, status: updateStatus } = useUpdateTopic();
-  const { data: topicDetail, isLoading: loadingDetail } = useGetTopicById(id || "");
+  const { data: topicDetail, isLoading: loadingDetail } = useGetTopicById(
+    id || ""
+  );
   const { data: bookData } = useAllBook();
 
   const topicData = useMemo(() => {
     const raw = (topicDetail as any)?.data ?? topicDetail;
     return raw as any;
   }, [topicDetail]);
-  
+
   const bookOptions = useMemo(
     () =>
-      (bookData?.data ?? []).map((b) => ({
+      (bookData?.data ?? []).map((b: any) => ({
         label: b.name,
         value: b._id,
       })),
@@ -57,27 +72,25 @@ const TopicDetail: React.FC = () => {
         message.success(COMMON_MESSAGE.TOPIC_CREATE_SUCCESS);
       }
       navigate(PATHS.private.admin.topic.list());
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   return (
     <PageWrapper>
-       <CommonBreadcrumb
-      items={[
-        {
-          label: 'Quản lý chủ đề',
-          separator: '',
-          path: PATHS.private.admin.topic.list(),
-
-        },
-        {
-          label: 'Chi tiết chủ đề',
-          separator: '/',
-          path: PATHS.private.admin.topic.detail(id || ''),
-        },
-      ]}
-    />
+      <CommonBreadcrumb
+        items={[
+          {
+            label: "Quản lý chủ đề",
+            separator: "",
+            path: PATHS.private.admin.topic.list(),
+          },
+          {
+            label: "Chi tiết chủ đề",
+            separator: "/",
+            path: PATHS.private.admin.topic.detail(id || ""),
+          },
+        ]}
+      />
       <Card title={isEdit ? "Chi tiết chủ đề" : "Tạo chủ đề"} bordered={false}>
         <Form
           layout="vertical"
@@ -112,7 +125,9 @@ const TopicDetail: React.FC = () => {
               loading={!bookData}
               showSearch
               filterOption={(input, option) =>
-                (option?.label as string)?.toLowerCase().includes(input.toLowerCase())
+                (option?.label as string)
+                  ?.toLowerCase()
+                  .includes(input.toLowerCase())
               }
             />
           </Form.Item>
@@ -133,15 +148,13 @@ const TopicDetail: React.FC = () => {
           <Form.Item
             label="Ảnh"
             name="image"
-            rules={[{ required: true, message: "Vui lòng chọn hoặc upload ảnh" }]}
+            rules={[
+              { required: true, message: "Vui lòng chọn hoặc upload ảnh" },
+            ]}
             valuePropName="value"
             trigger="onChangeInput"
           >
-            <InputUpload
-              mode="image"
-              accept="image/*"
-              maxSizeMB={5}
-            />
+            <InputUpload mode="image" accept="image/*" maxSizeMB={5} />
           </Form.Item>
 
           <Form.Item
@@ -157,11 +170,17 @@ const TopicDetail: React.FC = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                loading={createStatus === "pending" || updateStatus === "pending" || loadingDetail}
+                loading={
+                  createStatus === "pending" ||
+                  updateStatus === "pending" ||
+                  loadingDetail
+                }
               >
                 {isEdit ? "Lưu thay đổi" : "Lưu"}
               </Button>
-              <Button onClick={() => navigate(PATHS.private.admin.topic.list())}>
+              <Button
+                onClick={() => navigate(PATHS.private.admin.topic.list())}
+              >
                 Hủy
               </Button>
             </Space>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import Report from "./Report";
 import ExplainAnswer from "./ExplainAnswer";
 import { EX } from "@/modules/public/courses/exercise/style";
@@ -8,6 +8,7 @@ import { ExerciseModalProps } from "@/utils/type";
 import { BaseTag } from "@/utils/baseTagHTML";
 import { convertPixelToRem } from "@/utils/func/convertRem";
 import { icons, images } from "@/assets";
+import Button from "@/components/Login/Button";
 
 const PopupFail = ({ isOpen, onClick, setIsOpen }: ExerciseModalProps) => {
   const [isOpenExAnswerPopup, setIsOpenExAnswerPopup] = useState(false);

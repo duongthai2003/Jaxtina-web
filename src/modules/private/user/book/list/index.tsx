@@ -5,10 +5,9 @@ import { useAllBook, useAllBookPagination } from "@/hooks/useBookQuery";
 import FeaturedCourse from "@/modules/private/user/book/list/FeaturedCourse";
 import { getCircularProgress } from "@/utils/func/circularProgress";
 import { progressItems } from "@/utils/constants";
-import { Book, Pagination as BookPaginationMeta} from "./type";
+import { Book, Pagination as BookPaginationMeta } from "../type";
 import { icons } from "@/assets";
 import { BookStyles } from "./style";
-
 
 const ITEMS_PER_PAGE = 10;
 const PREVIEW_LIMIT = ITEMS_PER_PAGE;
@@ -52,10 +51,8 @@ const BookPage = () => {
   const { data: previewBooks, isLoading: previewLoading } = useAllBook();
   const previewBookList: Book[] = previewBooks?.data ?? [];
   const shouldUsePagination = previewBookList.length > ITEMS_PER_PAGE;
-  const {
-    data: paginatedBooks,
-    isLoading: paginatedLoading,
-  } = useAllBookPagination(currentPage, ITEMS_PER_PAGE, "");
+  const { data: paginatedBooks, isLoading: paginatedLoading } =
+    useAllBookPagination(currentPage, ITEMS_PER_PAGE, "");
   const isLoading = previewLoading || paginatedLoading;
 
   useEffect(() => {
@@ -80,22 +77,19 @@ const BookPage = () => {
           <Subtitle>Giao Tiếp Tự Tin, Ngữ Pháp Toàn Diện!</Subtitle>
         </HeaderSection>
         <CourseCard>
-          {isLoading ? (
-            Array.from({ length: 5 }).map((_, index) => (
-              <Skeleton key={index} loading={true} />
-            ))
-          ) : (
-            booksToRender.map((book) => (
-              <CourseCardImage
-                key={book._id}
-                src={book.imageSrc || book.url}
-                alt={book.name}
-                onClick={() => navigate(`${book.path}/${book._id}`)}
-                style={{ cursor: 'pointer' }}
-              />
-            ))
-          )}
-
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton key={index} loading={true} />
+              ))
+            : booksToRender.map((book) => (
+                <CourseCardImage
+                  key={book._id}
+                  src={book.imageSrc || book.url}
+                  alt={book.name}
+                  onClick={() => navigate(`${book.path}/${book._id}`)}
+                  style={{ cursor: "pointer" }}
+                />
+              ))}
         </CourseCard>
         {shouldRenderPagination && paginationMeta && (
           <AntPagination
@@ -131,7 +125,13 @@ const BookPage = () => {
                   <CircularProgressWrapper>
                     <BookStyles.CircularProgressSvgBlue viewBox="0 0 64 64">
                       <defs>
-                        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient
+                          id={gradientId}
+                          x1="0%"
+                          y1="0%"
+                          x2="100%"
+                          y2="100%"
+                        >
                           <stop offset="40%" stopColor="#ACC6FF" />
                           <stop offset="100%" stopColor="#4F9AF0" />
                         </linearGradient>
@@ -146,7 +146,9 @@ const BookPage = () => {
                         $gradientId={gradientId}
                       />
                     </BookStyles.CircularProgressSvgBlue>
-                    <CircularProgressText>{item.percentage}%</CircularProgressText>
+                    <CircularProgressText>
+                      {item.percentage}%
+                    </CircularProgressText>
                   </CircularProgressWrapper>
                 </ProgressItem>
                 {index < progressItems.length - 1 && (

@@ -42,7 +42,7 @@ const GameFlipCardWord = () => {
     clearMismatch,
   } = gameFlipCardStore();
   const [showFloatPoint, setShowFloatPoint] = useState(false);
-  const [floatPointPosition, setFloatPointPosition] = useState({ x: 0, y: 0 });
+  const [FloatPointPosition, setFloatPointPosition] = useState({ x: 0, y: 0 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const cardRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   // const {id} = useParams()
@@ -64,7 +64,8 @@ const GameFlipCardWord = () => {
       isChecking ||
       selected.some((c) => c.id === card.id) ||
       matched.includes(card.pairId)
-    ) return;
+    )
+      return;
     selectCard(card);
     if (selected.length === 1) {
       gameFlipCardStore.setState({ isChecking: true });
@@ -72,8 +73,12 @@ const GameFlipCardWord = () => {
       setTimeout(() => {
         const [first, second] = [...selected, card];
         if (first.pairId === second.pairId) {
-          const matchedCards = visibleCards.filter(c => c.pairId === first.pairId);
-          const remaining = visibleCards.filter(c => c.pairId !== first.pairId);
+          const matchedCards = visibleCards.filter(
+            (c) => c.pairId === first.pairId
+          );
+          const remaining = visibleCards.filter(
+            (c) => c.pairId !== first.pairId
+          );
           const replacement = cardQueue.slice(0, matchedCards.length);
 
           const el = cardRefs.current[first.id];
@@ -132,15 +137,12 @@ const GameFlipCardWord = () => {
         )}
 
         <Grid>
-          {visibleCards.map((card) => (
-            <div
-              key={card.id}
-              ref={(el) => (cardRefs.current[card.id] = el)}
-            >
+          {visibleCards.map((card, index) => (
+            <div key={index} ref={(el) => (cardRefs.current[card.id] = el)}>
               <FlipCardWord
                 front={card.value}
                 back={card.value}
-                isSelected={selected.some(c => c.id === card.id)}
+                isSelected={selected.some((c) => c.id === card.id)}
                 isMismatched={mismatched.includes(card.id)}
                 isMatched={matched.includes(card.pairId)}
                 isDisabled={!started || isChecking}
@@ -151,7 +153,11 @@ const GameFlipCardWord = () => {
         </Grid>
 
         {started && (
-          <ButtonPractice onClick={() => handleNavigateById(comTopicList[1].id)}>Thực hành nghe và nói</ButtonPractice>
+          <ButtonPractice
+            onClick={() => handleNavigateById(comTopicList[1].id)}
+          >
+            Thực hành nghe và nói
+          </ButtonPractice>
         )}
       </MainContent>
     </Wrapper>

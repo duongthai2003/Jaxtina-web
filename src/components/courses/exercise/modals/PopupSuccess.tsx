@@ -6,7 +6,7 @@ import { convertPixelToRem } from "@/utils/func/convertRem";
 import { ExerciseModalProps } from "@/utils/type";
 import { icons } from "@/assets";
 
-const PopupSuccess = ({ isOpen, onClick, setIsOpen }: ExerciseModalProps) => {
+const PopupSuccess = ({ isOpen, onClick }: ExerciseModalProps) => {
   return (
     <SuccessModalAntd centered closable={false} open={isOpen} footer={false}>
       <SuccBlock>

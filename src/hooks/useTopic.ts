@@ -2,7 +2,6 @@ import { useQuery, useMutation, UseQueryResult } from "@tanstack/react-query";
 import { message } from "antd";
 import { get } from "lodash";
 import { axiosClientAdmin } from "@/services/baseAdmin";
-import { axiosClient } from "@/services/base";
 import API from "@/utils/apiRoutes";
 import { queryKeys } from "@/utils/query";
 import { TopicErrorCode, TopicErrorDescription } from "@/utils/error";
@@ -73,16 +72,18 @@ const blobToDataUrl = (blob: Blob): Promise<string> => {
   });
 };
 
-export const getTopicImageWithToken = async (imagePath: string): Promise<string> => {
+export const getTopicImageWithToken = async (
+  imagePath: string
+): Promise<string> => {
   const response = await axiosClientAdmin.get(imagePath, {
-    responseType: "blob"
+    responseType: "blob",
   });
   const blob = response.data as Blob;
   return blobToDataUrl(blob);
 };
 
 const withTopicImages = async <
-  T extends TopicResponse | TopicPaginationResponse
+  T extends TopicResponse | TopicPaginationResponse,
 >(
   response: T
 ): Promise<T> => {
@@ -121,7 +122,7 @@ const fetcherGetAll = async (): Promise<TopicResponse> => {
 export const useGetAllTopics = (): UseQueryResult<TopicResponse, Error> => {
   return useQuery({
     queryKey: [queryKeys.private.manager.topic, "all"],
-    queryFn: () => fetcherGetAll()
+    queryFn: () => fetcherGetAll(),
   });
 };
 
@@ -138,8 +139,8 @@ const fetcherGetPaging = async (
       limit,
       search,
       bookId: bookId || undefined,
-      sort: sort || "asc"
-    }
+      sort: sort || "asc",
+    },
   });
   // console.log("---response---", response);
   const payload = get(response, "data", {});
@@ -155,12 +156,12 @@ const fetcherGetPaging = async (
       payload,
       "totalPages",
       Math.ceil((get(payload, "total", topics.length) || 0) / limit)
-    )
+    ),
   });
 
   return {
     data: topics,
-    pagination
+    pagination,
   };
 };
 
@@ -176,9 +177,9 @@ export const useGetTopicsPaging = (
       page,
       limit,
       search,
-      bookId
+      bookId,
     ],
-    queryFn: () => fetcherGetPaging(page, limit, search, bookId)
+    queryFn: () => fetcherGetPaging(page, limit, search, bookId),
   });
 };
 
@@ -190,7 +191,7 @@ const fetcherGetById = async (
     `${TOPIC_API}/${id}`
   );
   const topicResponse = get(response, "data", {
-    data: {} as Topic
+    data: {} as Topic,
   }) as CreateOrUpdateTopicResponse;
   return withSingleTopicImage(topicResponse);
 };
@@ -205,7 +206,7 @@ export const useGetTopicById = (
       const topic = (res as any)?.data ?? res;
       return { data: topic } as CreateOrUpdateTopicResponse;
     },
-    enabled: !!id
+    enabled: !!id,
   });
 };
 
@@ -216,7 +217,7 @@ const fetcherGetByBookId = async (
     `${TOPIC_API}/book/${bookId}`
   );
   const topicResponse = get(response, "data", {
-    data: {} as Topic
+    data: {} as Topic,
   }) as CreateOrUpdateTopicResponse;
   return withSingleTopicImage(topicResponse);
 };
@@ -231,10 +232,9 @@ export const useGetTopicsByBookId = (
       const topic = (res as any)?.data ?? res;
       return { data: topic } as CreateOrUpdateTopicResponse;
     },
-    enabled: !!bookId
+    enabled: !!bookId,
   });
 };
-
 
 interface CreateTopicParams {
   data: CreateTopicPayload;
@@ -242,22 +242,22 @@ interface CreateTopicParams {
 
 const handleTopicError = (error: any) => {
   const code = error?.response?.data?.errorCode;
-      if (code === TopicErrorCode.TOPIC_CODE_EXISTS) {
-        message.error(TopicErrorDescription.TOPIC_CODE_EXISTS);
-        return;
-      }
-      else if (code === TopicErrorCode.TOPIC_NOT_FOUND) {
-        message.error(TopicErrorDescription.TOPIC_NOT_FOUND);
-        return;
-      }
-      else if (code  === TopicErrorCode.TOPIC_ID_NOT_VALID ) {
-        message.error(TopicErrorDescription.TOPIC_ID_NOT_VALID)
-      }
-      else if( code === TopicErrorCode.TOPIC_TYPE_EXISTS) {
-        message.error(TopicErrorDescription.TOPIC_TYPE_EXISTS)
-      } else
-      message.error(error?.response?.data?.errorDescription || "Có lỗi xảy ra, vui lòng thử lại");
-    };
+  if (code === TopicErrorCode.TOPIC_CODE_EXISTS) {
+    message.error(TopicErrorDescription.TOPIC_CODE_EXISTS);
+    return;
+  } else if (code === TopicErrorCode.TOPIC_NOT_FOUND) {
+    message.error(TopicErrorDescription.TOPIC_NOT_FOUND);
+    return;
+  } else if (code === TopicErrorCode.TOPIC_ID_NOT_VALID) {
+    message.error(TopicErrorDescription.TOPIC_ID_NOT_VALID);
+  } else if (code === TopicErrorCode.TOPIC_TYPE_EXISTS) {
+    message.error(TopicErrorDescription.TOPIC_TYPE_EXISTS);
+  } else
+    message.error(
+      error?.response?.data?.errorDescription ||
+        "Có lỗi xảy ra, vui lòng thử lại"
+    );
+};
 
 export const useCreateTopic = () => {
   async function requestFn(params: CreateTopicPayload) {
@@ -274,7 +274,7 @@ export const useCreateTopic = () => {
   >({
     mutationKey: [queryKeys.private.manager.topic, "create"],
     mutationFn: requestFn,
-    onError: handleTopicError
+    onError: handleTopicError,
   });
 
   const { mutateAsync, status } = mutation;
@@ -282,7 +282,7 @@ export const useCreateTopic = () => {
   const createTopic = async ({ data }: CreateTopicParams) => {
     const result = await mutateAsync(data);
     const topicResponse = get(result, "data", {
-      data: {} as Topic
+      data: {} as Topic,
     }) as CreateOrUpdateTopicResponse;
     return withSingleTopicImage(topicResponse);
   };
@@ -311,7 +311,7 @@ export const useUpdateTopic = () => {
   >({
     mutationKey: [queryKeys.private.manager.topic, "update"],
     mutationFn: requestFn,
-    onError: handleTopicError
+    onError: handleTopicError,
   });
 
   const { mutateAsync, status } = mutation;
@@ -319,7 +319,7 @@ export const useUpdateTopic = () => {
   const updateTopic = async ({ id, data }: UpdateTopicParams) => {
     const result = await mutateAsync({ id, data });
     const topicResponse = get(result, "data", {
-      data: {} as Topic
+      data: {} as Topic,
     }) as CreateOrUpdateTopicResponse;
     return withSingleTopicImage(topicResponse);
   };
@@ -339,7 +339,7 @@ export const useDeleteTopic = () => {
 
   const mutation = useMutation<unknown, Error, DeleteTopicParams>({
     mutationKey: [queryKeys.private.manager.topic, "delete"],
-    mutationFn: requestFn
+    mutationFn: requestFn,
   });
 
   const { mutateAsync, status } = mutation;

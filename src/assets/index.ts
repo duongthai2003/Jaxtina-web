@@ -9,7 +9,7 @@ import jaxDang6 from "@/assets/images/jaxDang6 1.svg";
 import jaxUserChibi from "@/assets/images/jaxUser.png";
 import logoColor from "@/assets/images/logoColor.png";
 import logoShort from "@/assets/images/logoshort.png";
-import emailVerify from "@/assets/images/emailVerify.png";
+import emailVerify from "@/assets/images/emailVerify.gif";
 import bgheadCourselist from "@/assets/images/bghead_courselist.png";
 import beae from "@/assets/images/beae_linhVat.png";
 import bgcommunicate from "@/assets/images/bg-communicate.png";
@@ -172,5 +172,5 @@ export const images = {
   redFlag,
   userSit,
   flagUk,
-  flagVietNam
+  flagVietNam,
 };

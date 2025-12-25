@@ -105,6 +105,7 @@ const ReModal = styled(Modal)`
 const ReWrapper = styled(Form)`
   padding: ${convertPixelToRem(20)} ${convertPixelToRem(30)};
   display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;

@@ -7,7 +7,7 @@ import { device } from "@/utils/deviceBreakpoint";
 const Statistical = () => {
   return (
     <Wrapper>
-      {new Array(10).fill(1).map((item, index) => {
+      {new Array(10).fill(1).map((_, index) => {
         return (
           <LessonItem key={index}>
             <LessonItemName>Lesson 1: About you</LessonItemName>
@@ -43,7 +43,7 @@ export default Statistical;
 const StatisticalSkeleton = () => {
   return (
     <Wrapper>
-      {new Array(10).fill(1).map((item, index) => {
+      {new Array(10).fill(1).map((_, index) => {
         return (
           <LessonItem key={index}>
             <LessonTitle>

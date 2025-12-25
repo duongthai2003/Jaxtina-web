@@ -7,7 +7,7 @@ import { BaseTag } from "@/utils/baseTagHTML";
 const CourseInfo = () => {
   return (
     <Wrapper>
-      {new Array(5).fill(1).map((item, index) => {
+      {new Array(5).fill(1).map((_, index) => {
         return (
           <InfoItem key={index}>
             <InfoItemHead>
@@ -29,7 +29,7 @@ export default CourseInfo;
 const CourseInfoSkeleton = () => {
   return (
     <Wrapper>
-      {new Array(3).fill(1).map((item, index) => {
+      {new Array(3).fill(1).map((_, index) => {
         return (
           <InfoItem key={index}>
             <InfoItemHead>

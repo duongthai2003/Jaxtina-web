@@ -5,13 +5,13 @@ import { PATHS } from "@/routers/path";
 import { icons } from "@/assets";
 
 import { BaseTag } from "@/utils/baseTagHTML";
-import { exercise, exerciseLearnVocab } from "./fakeData";
+import { exercise } from "./fakeData";
 import { useAudio } from "react-use";
 import QuestionMenu from "@/components/courses/QuestionMenu";
-import ExerciseLearnVocab from "@/components/courses/exercise/ExerciseLearnVocab";
 import PopupSuccess from "@/components/courses/exercise/modals/PopupSuccess";
 import PopupFail from "@/components/courses/exercise/modals/PopupFail";
 import FinalPopup from "@/components/courses/exercise/modals/FinalModal";
+import ExerciseListening from "@/components/courses/exercise/ExerciseListening";
 
 const Exercise = () => {
   const navigate = useNavigate();
@@ -90,11 +90,11 @@ const Exercise = () => {
             </EX.progressBlock>
           </BaseTag.div>
           <EX.questionBlock>
-            {/* <ExerciseListening
+            <ExerciseListening
               data={exercise.exerciseList[currentQuestionIndex]}
               setSelectedAnswer={setSelectedAnswer}
               selectedAnswer={selectedAnswer}
-            /> */}
+            />
             {/* <ExerciseReading
               data={exerciseReading.exerciseList[currentQuestionIndex]}
               setSelectedAnswer={setSelectedAnswer}
@@ -105,11 +105,11 @@ const Exercise = () => {
               setSelectedAnswer={setSelectedAnswer}
               selectedAnswer={selectedAnswer}
             /> */}
-            <ExerciseLearnVocab
+            {/* <ExerciseLearnVocab
               data={exerciseLearnVocab.exerciseList[currentQuestionIndex]}
               setSelectedAnswer={setSelectedAnswer}
               selectedAnswer={selectedAnswer}
-            />
+            /> */}
           </EX.questionBlock>
         </EX.content>
         <div>

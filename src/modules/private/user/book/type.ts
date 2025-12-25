@@ -1,8 +1,8 @@
-type CombinationItem = {
-    id: number;
-    title: string;
-    lessonCount: number;
-    progress: number;
+export type CombinationItem = {
+  id: number;
+  title: string;
+  lessonCount: number;
+  progress: number;
 };
 
 export interface Book {
@@ -19,29 +19,29 @@ export interface Book {
   __v: number;
   imageSrc?: string;
   background_url: string;
-  road_url: string
+  road_url: string;
   backgroundSrc?: string;
-  roadSrc?: string
+  roadSrc?: string;
 }
 
 export interface CreateBookProps {
-    open: boolean;
-    onCancel: () => void;
+  open: boolean;
+  onCancel: () => void;
 }
 
 export interface DeleteAndUpdateBookProps {
-    name: string
-    isOpen: boolean
-    bookId: string
-    onClose: () => void
-    onSuccess?: () => void
+  name: string;
+  isOpen: boolean;
+  bookId: string;
+  onClose: () => void;
+  onSuccess?: () => void;
 }
 
 export interface Pagination {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 export interface BookResponse {
@@ -61,7 +61,7 @@ export interface CreateBookPayload {
   description: string;
   path: string;
   background_url: string;
-  road_url?: string
+  road_url?: string;
 }
 export interface CreateBookParams {
   data: CreateBookPayload;
@@ -73,14 +73,14 @@ export interface CreateOrUpdateBookResponse {
 }
 
 export interface UpdateOrDeleteBookPayload {
-    name?: string;
-    code?: string;
-    url?: string;
-    description?: string;
-    path?: string;
-    order?: string;
-    background_url?: string;
-    road_url?: string
+  name?: string;
+  code?: string;
+  url?: string;
+  description?: string;
+  path?: string;
+  order?: string;
+  background_url?: string;
+  road_url?: string;
 }
 export interface UpdateBookParams {
   id: string;
@@ -88,15 +88,15 @@ export interface UpdateBookParams {
 }
 
 export interface SuccessRequest {
-    success: boolean;
+  success: boolean;
 }
 
 export interface DeleteBookParams {
   id: string;
 }
 export interface DeleteBookResponse {
-    data: SuccessRequest;
-    statusCode: number;
+  data: SuccessRequest;
+  statusCode: number;
 }
 
 export interface SearchBookParams {
@@ -114,22 +114,22 @@ export interface IFilterBook {
   bookId?: string;
   sort?: Sort;
 }
-export type Sort = 'asc' | 'desc';
+export type Sort = "asc" | "desc";
 
 export type Vocab = {
-    word: string;
-    ipa: string;
-    text: string;
-    meaningVocab: string;
+  word: string;
+  ipa: string;
+  text: string;
+  meaningVocab: string;
 };
 
 export type SubtitleItem = {
-    id: string;
-    start: number;
-    end: number;
-    english: string;
-    vietnam: string;
-    newWord: Vocab[];
+  id: string;
+  start: number;
+  end: number;
+  english: string;
+  vietnam: string;
+  newWord: Vocab[];
 };
 
 // interface FeaturedCourse {
