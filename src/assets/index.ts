@@ -33,7 +33,7 @@ import infoIcon from "@/assets/icons/infoIcon.svg";
 // import icons
 // import EmailIcon from "@/assets/icons/email.svg";
 // import KeyIcon from "@/assets/icons/key.svg";
-import NameIcon from "@/assets/icons/User.svg";
+import NameIcon from "@/assets/icons/user.svg";
 import DateIcon from "@/assets/icons/Calendar Minimalistic.svg";
 import BackIcon from "@/assets/icons/Button.svg";
 import noteBookpurple from "@/assets/icons/notebookpurple.svg";
