@@ -1,0 +1,101 @@
+@use "/src/styles/abstracts/functions" as func;
+@use "/src/styles/abstracts/_variables.scss" as var;
+
+//font-family
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("/src/assets/fonts/SF-Pro-Display.ttf");
+}
+@font-face {
+  font-family: "SF Pro Text";
+  src: url("/src/assets/fonts/SF-Pro.ttf");
+}
+body,
+html,
+* {
+  font-family: "SF Pro Text";
+  // scroll-behavior: smooth;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  // border-width: 0;
+  // border-style: solid;
+  // border-color: #e5e7eb;
+}
+
+::-webkit-scrollbar {
+  width: func.toRem(4) !important;
+  border-radius: func.toRem(12);
+  margin-left: func.toRem(5);
+}
+
+::-webkit-scrollbar-track {
+  background: var.$color_white !important;
+  margin-top: func.toRem(10);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var.$tw_stone_400 !important;
+  border: func.toRem(4) solid transparent;
+  border-radius: func.toRem(12);
+}
+
+input[type="number"] {
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+  -moz-appearance: textfield;
+}
+
+// Ẩn icon calendar mặc định của trình duyệt cho input type="date"
+input[type="date"],
+.ant-input[type="date"] {
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+  
+  &::-moz-calendar-picker-indicator {
+    display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  &::-ms-calendar-picker-indicator {
+    display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  -webkit-appearance: none;
+  position: relative;
+}
+// over ride ckeditor css
+// .cke_chrome {
+//   border-radius: 4px;
+// }
+
+// .cke_chrome:hover {
+//   border: 1px solid #0284c7 !important;
+// }
+// .cke_top,
+// .cke_path {
+//   display: none !important;
+// }
+// .cke_bottom {
+//   border-top: none !important;
+//   background: #fff !important;
+// }
+
+.hide-scroll-corner::-webkit-scrollbar-track {
+  background: transparent !important;
+}

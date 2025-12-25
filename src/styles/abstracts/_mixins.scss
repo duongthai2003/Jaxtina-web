@@ -1,0 +1,8 @@
+@mixin Button($color, $background, $border-radius) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $background;
+  color: $color;
+  border-radius: $border-radius;
+}
